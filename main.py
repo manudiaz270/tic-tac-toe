@@ -22,16 +22,29 @@ class Board:
 
         return display_string
     
+    def invalid_move(self, move):
+        try:
+            int(move)
+        except ValueError:
+            return 'invalid format'
+        
+        if len(list(move)) != 2:
+            return 'invalid format'
+
+
+        y, x = list(move)
+        if int(y) > 2 or int(x) > 2:
+            return 'invalid move'
+        if self.board[int(y)][int(x)]:
+            return 'space already occupied'
+        return ''
+    
     def update_board(self, move):
         if self.current_player == 'X':
             self.current_player = 'O'
         else:
             self.current_player = 'X'
         y, x = list(move)
-        if int(y) > 2 or int(x) > 2:
-            return 'invalid move'
-        if self.board[int(y)][int(x)]:
-            return 'space already occupied'
         
         self.move_count += 1
         if self.current_player == 'X':
@@ -85,4 +98,11 @@ class Board:
 
 
 board = Board()
+board.update_board('00')
+print(board.display_board())
+def turn():
+    #print(board.display_board())
+    #move = input('type in ')
+    pass
 
+print(board.invalid_move('123 '))
