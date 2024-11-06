@@ -1,5 +1,5 @@
 class Board:
-    current_player = 'O'
+    current_player = '0'
     move_count = 0
     board = [
         [0,0,0],
@@ -53,6 +53,7 @@ class Board:
             val = 10
         self.board[int(y)][int(x)] = val
         
+        
     def sum_diagonals(self):
         principal = 0
         secondary = 0
@@ -98,11 +99,27 @@ class Board:
 
 
 board = Board()
-board.update_board('00')
+
 print(board.display_board())
 def turn():
-    #print(board.display_board())
-    #move = input('type in ')
-    pass
+    move = input(f"{board.current_player}'s turn\ntype in your move in the format YX ")
+    while board.invalid_move(move):
+        move = input(f'{board.invalid_move(move)}, type in a valid move: ')
+    board.update_board(move)
+    print(board.display_board())
+    
+    
 
-print(board.invalid_move('123 '))
+
+    
+while True:
+    turn()
+    match board.game_status():
+        case 0:
+            continue
+        case 1:
+            print(f'{board.current_player} has won')
+            break
+        case 2:
+            print('game ended in draw')
+            break
